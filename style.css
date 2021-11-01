@@ -1,0 +1,83 @@
+/* Smartphone */
+@media  (min-width: 320px) and (max-device-width:480px) {
+    .contentMain___card{
+        background-color:aquamarine;
+        width: 100%;
+        height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 1%;
+
+    }   
+}
+
+/* Laptop */
+@media  (min-device-width: 1200px) and (max-device-width: 1600px){
+    .contentMain___card{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background-color: antiquewhite;
+    
+    }
+
+    .contentMain{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 100vh;
+
+
+    }
+
+    .contentViewNotes{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background-color: aquamarine
+    }
+
+    .style_dropdown{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .contentNotes___Child{
+        width:30%;
+        height:35%;
+        background-color: lightgray;
+        margin: 0 0 2% 0;
+    }
+
+    .btn_dropdown___style{
+        margin: 0 0 25% 0
+    }
+
+    .li_basket{
+        list-style: none;
+    }
+
+    .ul_basquet{
+        display: flex;
+        flex-direction: column;
+        background-color: lightgray;
+        width: 90%;
+        height: 90%
+    }
+}
+
+
+
+
+/* .input-group{
+    display: flex;
+    flex-direction: column;
+} */
