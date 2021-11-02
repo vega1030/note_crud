@@ -65,10 +65,7 @@ class Ui {
                     </ul>
                     <div class="content_basket">
                     <div class='ul_basquet'>                    
-                        <ul>
-                            <li class='li_basket'><img src="./icon/basket.svg" alt="" name= 'delete'></img>
-                            </li>
-                        </ul>
+                            <img src="./icon/basket.svg" alt="" name= 'delete'></img>
                     </div>
                     </div>
             </div>
