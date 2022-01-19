@@ -1,0 +1,23 @@
+{
+  "name": "shopping_list",
+  "version": "1.0.0",
+  "description": "Construction with POO",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vega1030/note_generator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vega1030/note_generator/issues"
+  },
+  "homepage": "https://github.com/vega1030/note_generator#readme",
+  "dependencies": {
+    "firebase": "^9.4.1"
+  }
+}
