@@ -1,4 +1,18 @@
 //------------@@@@@-------------
+import {initializeApp} from 'firebase/app';
+import {getAuth} from 'firebase/auth';
+import {getFirestore} from 'firebase/firestore';
+
+const firebaseApp =  initializeApp({
+    apiKey: "AIzaSyC4Coi7SzW2U5A7GyC7fuyK-2b9ivkv_M8",
+    authDomain: "theshoppingnote.firebaseapp.com",
+    projectId: "theshoppingnote",
+    storageBucket: "theshoppingnote.appspot.com",
+    messagingSenderId: "298950710677",
+    appId: "1:298950710677:web:12bc2ed77f37a7d8fd129c",
+    measurementId: "G-EDE7Y4H78L"
+})
+
 const _private = new WeakMap()
 
 class Product {
