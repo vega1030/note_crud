@@ -1,28 +1,23 @@
-//------------@@@@@-------------
-import {initializeApp} from 'firebase/app';
-import {getAuth} from 'firebase/auth';
-import {getFirestore} from 'firebase/firestore';
+import {saveNote, getNote} from './db_firebase.js'
 
-const firebaseApp =  initializeApp({
-    apiKey: "AIzaSyC4Coi7SzW2U5A7GyC7fuyK-2b9ivkv_M8",
-    authDomain: "theshoppingnote.firebaseapp.com",
-    projectId: "theshoppingnote",
-    storageBucket: "theshoppingnote.appspot.com",
-    messagingSenderId: "298950710677",
-    appId: "1:298950710677:web:12bc2ed77f37a7d8fd129c",
-    measurementId: "G-EDE7Y4H78L"
+window.addEventListener('DOMContentLoaded', async ()=>{
+    const querySnapshot = await getNote()
+
+querySnapshot.forEach(doc=>{
+    console.log(doc.data())
+})
 })
 
 const _private = new WeakMap()
 
 class Product {
-    constructor(brand,price,comment){
+    constructor(brand,amount,comment){
         
         this._brand = brand;
-        this._price = price;
+        this._amount = amount;
         this._comment = comment
         
-        _private.set(this, price)
+        _private.set(this, amount)
     }
 
     //brand
@@ -34,11 +29,11 @@ class Product {
         return this._brand}
 
     //price
-    set price(newPrice){
-        _private.set(this)._price = newPrice;
+    set amount(newAmount){
+        _private.set(this)._amount = newAmount;
     }
-    get price() {
-        return this._price
+    get amount() {
+        return this._amount
     }
 
     //comment
@@ -86,7 +81,7 @@ class Ui {
     }
     addProduct(productUi){
         const productList = document.getElementById('contentNotes')
-        if (productUi._brand != '' || productUi._price != ''){
+        if (productUi._brand != '' || productUi._amount != ''){
         productList.innerHTML += 
         `
             <div class="dropdown style_dropdown contentViewNotes___dropdown">
@@ -95,7 +90,7 @@ class Ui {
                 </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="#">Product: <strong>${productUi._brand}</strong> </a></li>
-                        <li><a class="dropdown-item" href="#"> Price: <strong>${productUi._price}</strong> </a></li>
+                        <li><a class="dropdown-item" href="#"> Price: <strong>${productUi._amount}</strong> </a></li>
                         <li><a class="dropdown-item" href="#"> Comment: <strong>${productUi._comment}</strong> </a></li>
                     </ul>
                     <div class="content_basket">
@@ -119,16 +114,18 @@ class Ui {
 document.getElementById('product_form')
 .addEventListener('submit',(e)=>{    
     const productName = document.getElementById('product').value
-    const priceValue = document.getElementById('price').value
+    const amountValue = document.getElementById('amount').value
     const textArea = document.querySelector('.textAreaInput').value
     
-    const product = new Product(productName,priceValue,textArea)
+    const product = new Product(productName,amountValue,textArea)
     const ui = new Ui()
     
     
     ui.addProduct(product, true)
     ui.resetForm()
     e.preventDefault()
+
+    saveNote(productName,amountValue,textArea)
 })
 
 document.getElementById('contentNotes').addEventListener('click',(e)=>{
@@ -137,4 +134,5 @@ document.getElementById('contentNotes').addEventListener('click',(e)=>{
 })
 
 
+//Logic of Login
 
