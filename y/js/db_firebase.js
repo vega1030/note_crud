@@ -9,7 +9,9 @@ import {
   onSnapshot 
 } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
 
-  // https://firebase.google.com/docs/web/setup#available-libraries
+//onSnapshot listen to the db in real-time. The app doesn't need refresh for view the new data
+ 
+// https://firebase.google.com/docs/web/setup#available-libraries
 
   // Your web app's Firebase configuration
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -37,6 +39,9 @@ export const saveNote = (product,amount,comment) =>{
 
   export const getNote = () => getDocs(collection(db,'note'))
 
-  export const onGetNote = () =>{
-     
+
+  //function for view db in the real-time
+
+  export const onGetNote = (calling) =>{
+    onSnapshot(collection (db, 'note'),calling)
   }

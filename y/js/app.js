@@ -1,12 +1,11 @@
-import {saveNote, getNote} from './db_firebase.js'
+import {
+    saveNote, getNote,onGetNote ,
+    
+    } from './db_firebase.js'
 
-window.addEventListener('DOMContentLoaded', async ()=>{
-    const querySnapshot = await getNote()
 
-querySnapshot.forEach(doc=>{
-    console.log(doc.data())
-})
-})
+
+
 
 const _private = new WeakMap()
 
@@ -80,26 +79,26 @@ class Ui {
         
     }
     addProduct(productUi){
-        const productList = document.getElementById('contentNotes')
+        // const productList = document.getElementById('contentNotes')
         if (productUi._brand != '' || productUi._amount != ''){
-        productList.innerHTML += 
-        `
-            <div class="dropdown style_dropdown contentViewNotes___dropdown">
-                <button class="btn btn-secondary dropdown-toggle btn_dropdown___style" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    Ver
-                </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Product: <strong>${productUi._brand}</strong> </a></li>
-                        <li><a class="dropdown-item" href="#"> Price: <strong>${productUi._amount}</strong> </a></li>
-                        <li><a class="dropdown-item" href="#"> Comment: <strong>${productUi._comment}</strong> </a></li>
-                    </ul>
-                    <div class="content_basket">
-                        <div class='ul_basquet'>                    
-                            <img src="./icon/basket.svg" alt="" name= 'delete'></img>
-                        </div>
-                    </div>
-            </div>
-        ` 
+        // productList.innerHTML += 
+        // `
+        //     <div class="dropdown style_dropdown contentViewNotes___dropdown">
+        //         <button class="btn btn-secondary dropdown-toggle btn_dropdown___style" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        //             Ver
+        //         </button>
+        //             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        //                 <li><a class="dropdown-item" href="#">Product: <strong>${productUi._brand}</strong> </a></li>
+        //                 <li><a class="dropdown-item" href="#"> Price: <strong>${productUi._amount}</strong> </a></li>
+        //                 <li><a class="dropdown-item" href="#"> Comment: <strong>${productUi._comment}</strong> </a></li>
+        //             </ul>
+        //             <div class="content_basket">
+        //                 <div class='ul_basquet'>                    
+        //                     <img src="./icon/basket.svg" alt="" name= 'delete'></img>
+        //                 </div>
+        //             </div>
+        //     </div>
+        // ` 
     this.showMessage('Product Added Successfully','info')
 }else{
     
@@ -127,6 +126,43 @@ document.getElementById('product_form')
 
     saveNote(productName,amountValue,textArea)
 })
+
+const loadNotesDOM = ()=>{
+    
+    window.addEventListener('DOMContentLoaded', async ()=>{
+
+        //Function for search of dates in the db, in real-time
+
+        onGetNote((querySnapshot)=>{            
+            querySnapshot.forEach(doc=>{
+
+                const productList = document.getElementById('contentNotes')
+                const notesDb = doc.data()
+                productList.innerHTML += 
+                
+                `
+                    <div class="dropdown style_dropdown contentViewNotes___dropdown">
+                        <button class="btn btn-secondary dropdown-toggle btn_dropdown___style" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Ver
+                        </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="#">Product: <strong>${notesDb.product}</strong> </a></li>
+                                <li><a class="dropdown-item" href="#"> Price: <strong>${notesDb.amount}</strong> </a></li>
+                                <li><a class="dropdown-item" href="#"> Comment: <strong>${notesDb.comment}</strong> </a></li>
+                            </ul>
+                            <div class="content_basket">
+                                <div class='ul_basquet'>                    
+                                    <img src="./icon/basket.svg" alt="" name= 'delete'></img>
+                                </div>
+                            </div>
+                    </div>
+                ` 
+        });
+        })
+    })
+}
+
+loadNotesDOM()
 
 document.getElementById('contentNotes').addEventListener('click',(e)=>{
     const ui = new Ui()
