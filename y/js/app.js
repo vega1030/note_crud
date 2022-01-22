@@ -1,6 +1,6 @@
 import {
     saveNote, getNote,onGetNote ,
-    
+    deleteNote
     } from './db_firebase.js'
 
 
@@ -135,11 +135,12 @@ const loadNotesDOM = ()=>{
 
         onGetNote((querySnapshot)=>{            
             querySnapshot.forEach(doc=>{
-
                 const productList = document.getElementById('contentNotes')
                 const notesDb = doc.data()
-                productList.innerHTML += 
+
+                const idDbData = doc.id
                 
+                productList.innerHTML += 
                 `
                     <div class="dropdown style_dropdown contentViewNotes___dropdown">
                         <button class="btn btn-secondary dropdown-toggle btn_dropdown___style" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -151,12 +152,19 @@ const loadNotesDOM = ()=>{
                                 <li><a class="dropdown-item" href="#"> Comment: <strong>${notesDb.comment}</strong> </a></li>
                             </ul>
                             <div class="content_basket">
-                                <div class='ul_basquet'>                    
-                                    <img src="./icon/basket.svg" alt="" name= 'delete'></img>
+                                <div class='ul_basquet'>   
+                                    <img src="./icon/basket.svg" alt="basquet" name= 'delete' class ='delete_basquet' data-id='${idDbData}'></img>
                                 </div>
                             </div>
                     </div>
                 ` 
+                const basquetDelete = productList.querySelectorAll('.delete_basquet')
+
+                basquetDelete.forEach(basquet=>{
+                    basquet.addEventListener('click',({target:{dataset}})=>{
+                        deleteNote(dataset.id)
+                    })
+                })
         });
         })
     })
@@ -168,7 +176,6 @@ document.getElementById('contentNotes').addEventListener('click',(e)=>{
     const ui = new Ui()
     ui.deleteProduct(e.target)
 })
-
 
 //Logic of Login
 

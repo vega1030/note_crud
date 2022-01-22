@@ -6,7 +6,9 @@ import {
   collection, 
   addDoc, 
   getDocs,
-  onSnapshot 
+  onSnapshot,
+  deleteDoc,
+  doc
 } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
 
 //onSnapshot listen to the db in real-time. The app doesn't need refresh for view the new data
@@ -45,3 +47,5 @@ export const saveNote = (product,amount,comment) =>{
   export const onGetNote = (calling) =>{
     onSnapshot(collection (db, 'note'),calling)
   }
+
+  export const deleteNote = id => deleteDoc(doc(db,'note',id))
