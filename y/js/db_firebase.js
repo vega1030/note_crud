@@ -55,3 +55,5 @@ export const saveNote = (productClass) =>{
   export const getOneNote = id => getDoc(doc(db,'note',id))
 
   export const upDateNote =  (id, newFields) =>updateDoc(doc(db,'note',id), newFields)
+
+  

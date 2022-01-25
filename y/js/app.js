@@ -4,12 +4,11 @@ import {
     upDateNote
     } from './db_firebase.js'
 
-
-
+let editStatus = false
+let id = ''
 
 
 const _private = new WeakMap()
-let editStatus = false
 class Product {
     constructor(product,amount,comment){
         
@@ -87,31 +86,10 @@ class Ui {
 }
 
 
-//Listeners
+//***************** Logic for view of dates in the DOM (in real-time) */
 
-document.getElementById('product_form')
-.addEventListener('submit',(e)=>{    
-    const productName = document.getElementById('product').value
-    const amountValue = document.getElementById('amount').value
-    const textArea = document.querySelector('.textAreaInput').value
-    const ui = new Ui()
-    const product = new Product(productName,amountValue,textArea)
-    if (product._product === '' && product._amount === '') {
-        ui.showMessage('Please, complete the fields', 'danger')
-    }
-    else{
-        ui.showMessage('Complete successfully', 'success')
-        saveNote(product)
-        ui.resetForm()
-    }
-    e.preventDefault()
-})
-
-//Function for search of dates in the db, in real-time
 const productList = document.getElementById('contentNotes')
-    
     window.addEventListener('DOMContentLoaded', async ()=>{
-
 
         onGetNote((querySnapshot)=>{ 
             let viewDOM = ''           
@@ -119,6 +97,7 @@ const productList = document.getElementById('contentNotes')
                 const notesDb =  doc.data()
                 const idDbData = doc.id
                 viewDOM += 
+                
                 `
                     <div class="dropdown style_dropdown contentViewNotes___dropdown">
                         <button class="btn btn-secondary dropdown-toggle btn_dropdown___style" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -137,20 +116,18 @@ const productList = document.getElementById('contentNotes')
                             </div>
                     </div>
                 ` 
+
+//***************** Logic for delete dates in Firestore */
+
                 productList.innerHTML = viewDOM
                 const basquetDelete = productList.querySelectorAll('.delete_basquet')             
-
                 basquetDelete.forEach(basquet=>{
                     basquet.addEventListener('click',({target:{dataset}})=>{
                         deleteNote(dataset.id)
                     })
                 })
 
-                basquetDelete.forEach(basquet=>{
-                    basquet.addEventListener('click',({target:{dataset}})=>{
-                        deleteNote(dataset.id)
-                    })
-                })
+//***************** Logic for edit dates in Firestore */
 
                 const editNote = productList.querySelectorAll('.edit_data')
                 editNote.forEach((edit)=>{
@@ -162,16 +139,46 @@ const productList = document.getElementById('contentNotes')
                         product_form['product'].value=taskAutoComplete.product
                         product_form['amount'].value=taskAutoComplete.amount
                         product_form['exampleFormControlTextarea1'].value = taskAutoComplete.comment
+                        
+                        editStatus = true
+                        id = doc.id
+                        product_form['btnSubmit'].innerText = 'Update'
                     })
                 })
         });
         })
     })
 
+    //***************** Logic for save dates in Firestore */
+
+
+    document.getElementById('product_form')
+    .addEventListener('submit',(e)=>{    
+        const productName = document.getElementById('product').value
+        const amountValue = document.getElementById('amount').value
+        const textArea = document.querySelector('.textAreaInput').value
+        const ui = new Ui()
+        const product = new Product(productName,amountValue,textArea)
+    
+        //***************** Condition for update data or save data in firebase */
+        if(!editStatus){
+            saveNote(product)
+        }
+        else{
+            upDateNote(id,{product: product.product,amount: product.amount,comment: product.comment})
+            editStatus = false
+        }
+        
+        ui.resetForm()   
+        e.preventDefault()
+        
+    })
+
 //Deleted info in UI
 
 document.getElementById('contentNotes').addEventListener('click',(e)=>{
     //UI
+    
     const productList = document.getElementById('contentNotes')
     const ui = new Ui()
     ui.deleteProduct(e.target)
