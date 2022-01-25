@@ -96,9 +96,15 @@ document.getElementById('product_form')
     const textArea = document.querySelector('.textAreaInput').value
     const ui = new Ui()
     const product = new Product(productName,amountValue,textArea)
-    ui.resetForm()
+    if (product._product === '' && product._amount === '') {
+        ui.showMessage('Please, complete the fields', 'danger')
+    }
+    else{
+        ui.showMessage('Complete successfully', 'success')
+        saveNote(product)
+        ui.resetForm()
+    }
     e.preventDefault()
-    saveNote(product)
 })
 
 //Function for search of dates in the db, in real-time
