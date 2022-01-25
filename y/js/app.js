@@ -1,6 +1,7 @@
 import {
-    saveNote, getNote,onGetNote ,
-    deleteNote
+    saveNote, getOneNote,onGetNote ,
+    deleteNote,
+    upDateNote
     } from './db_firebase.js'
 
 
@@ -8,24 +9,24 @@ import {
 
 
 const _private = new WeakMap()
-
+let editStatus = false
 class Product {
-    constructor(brand,amount,comment){
+    constructor(product,amount,comment){
         
-        this._brand = brand;
+        this._product = product;
         this._amount = amount;
         this._comment = comment
         
         _private.set(this, amount)
     }
 
-    //brand
+    //Product
 
-    set brand (newBrand){
-        this._brand = newBrand
+    set product (newProduct){
+        this._product = newProduct
     }
-    get brand(){
-        return this._brand}
+    get product(){
+        return this._product}
 
     //price
     set amount(newAmount){
@@ -78,33 +79,11 @@ class Ui {
         },3000)
         
     }
-    addProduct(productUi){
-        // const productList = document.getElementById('contentNotes')
-        if (productUi._brand != '' || productUi._amount != ''){
-        // productList.innerHTML += 
-        // `
-        //     <div class="dropdown style_dropdown contentViewNotes___dropdown">
-        //         <button class="btn btn-secondary dropdown-toggle btn_dropdown___style" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-        //             Ver
-        //         </button>
-        //             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-        //                 <li><a class="dropdown-item" href="#">Product: <strong>${productUi._brand}</strong> </a></li>
-        //                 <li><a class="dropdown-item" href="#"> Price: <strong>${productUi._amount}</strong> </a></li>
-        //                 <li><a class="dropdown-item" href="#"> Comment: <strong>${productUi._comment}</strong> </a></li>
-        //             </ul>
-        //             <div class="content_basket">
-        //                 <div class='ul_basquet'>                    
-        //                     <img src="./icon/basket.svg" alt="" name= 'delete'></img>
-        //                 </div>
-        //             </div>
-        //     </div>
-        // ` 
-    this.showMessage('Product Added Successfully','info')
-}else{
-    
-    this.showMessage('Complete Fields Please','danger')
+
+    uiAlert(flag){
+        flag === true ? this.showMessage('Complete Fields Please','danger') :this.showMessage('Product Added Successfully','info')
 }
-    }
+    
 }
 
 
@@ -115,32 +94,25 @@ document.getElementById('product_form')
     const productName = document.getElementById('product').value
     const amountValue = document.getElementById('amount').value
     const textArea = document.querySelector('.textAreaInput').value
-    
-    const product = new Product(productName,amountValue,textArea)
     const ui = new Ui()
-    
-    
-    ui.addProduct(product, true)
+    const product = new Product(productName,amountValue,textArea)
     ui.resetForm()
     e.preventDefault()
-
-    saveNote(productName,amountValue,textArea)
+    saveNote(product)
 })
 
-const loadNotesDOM = ()=>{
+//Function for search of dates in the db, in real-time
+const productList = document.getElementById('contentNotes')
     
     window.addEventListener('DOMContentLoaded', async ()=>{
 
-        //Function for search of dates in the db, in real-time
 
-        onGetNote((querySnapshot)=>{            
+        onGetNote((querySnapshot)=>{ 
+            let viewDOM = ''           
             querySnapshot.forEach(doc=>{
-                const productList = document.getElementById('contentNotes')
-                const notesDb = doc.data()
-
+                const notesDb =  doc.data()
                 const idDbData = doc.id
-                
-                productList.innerHTML += 
+                viewDOM += 
                 `
                     <div class="dropdown style_dropdown contentViewNotes___dropdown">
                         <button class="btn btn-secondary dropdown-toggle btn_dropdown___style" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -154,28 +126,49 @@ const loadNotesDOM = ()=>{
                             <div class="content_basket">
                                 <div class='ul_basquet'>   
                                     <img src="./icon/basket.svg" alt="basquet" name= 'delete' class ='delete_basquet' data-id='${idDbData}'></img>
+                                    <img src="./icon/edit_icon.svg" alt='edit' name = 'edit' class='edit_data' data-id = '${idDbData}'></img>
                                 </div>
                             </div>
                     </div>
                 ` 
-                const basquetDelete = productList.querySelectorAll('.delete_basquet')
+                productList.innerHTML = viewDOM
+                const basquetDelete = productList.querySelectorAll('.delete_basquet')             
 
                 basquetDelete.forEach(basquet=>{
                     basquet.addEventListener('click',({target:{dataset}})=>{
                         deleteNote(dataset.id)
                     })
                 })
+
+                basquetDelete.forEach(basquet=>{
+                    basquet.addEventListener('click',({target:{dataset}})=>{
+                        deleteNote(dataset.id)
+                    })
+                })
+
+                const editNote = productList.querySelectorAll('.edit_data')
+                editNote.forEach((edit)=>{
+                    edit.addEventListener('click',async({target:{dataset}})=>{
+                        const doc =  await getOneNote(dataset.id)
+                        
+                        const taskAutoComplete = doc.data()
+                        
+                        product_form['product'].value=taskAutoComplete.product
+                        product_form['amount'].value=taskAutoComplete.amount
+                        product_form['exampleFormControlTextarea1'].value = taskAutoComplete.comment
+                    })
+                })
         });
         })
     })
-}
 
-loadNotesDOM()
+//Deleted info in UI
 
 document.getElementById('contentNotes').addEventListener('click',(e)=>{
+    //UI
+    const productList = document.getElementById('contentNotes')
     const ui = new Ui()
     ui.deleteProduct(e.target)
 })
 
-//Logic of Login
 

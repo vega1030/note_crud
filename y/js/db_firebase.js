@@ -8,7 +8,9 @@ import {
   getDocs,
   onSnapshot,
   deleteDoc,
-  doc
+  doc,
+  getDoc,
+  updateDoc
 } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
 
 //onSnapshot listen to the db in real-time. The app doesn't need refresh for view the new data
@@ -31,10 +33,10 @@ import {
   const app = initializeApp(firebaseConfig);
 const db = getFirestore()
   
-export const saveNote = (product,amount,comment) =>{
-  (product != '', amount != '')?
+export const saveNote = (productClass) =>{
+  (productClass.product != '', productClass.amount != '')?
     addDoc(collection(db,'note'),{
-      product: product,amount: amount,comment: comment
+      product: productClass.product,amount: productClass.amount,comment: productClass.comment
     }):
     console.log("error")
   }
@@ -49,3 +51,7 @@ export const saveNote = (product,amount,comment) =>{
   }
 
   export const deleteNote = id => deleteDoc(doc(db,'note',id))
+
+  export const getOneNote = id => getDoc(doc(db,'note',id))
+
+  export const upDateNote =  (id, newFields) =>updateDoc(doc(db,'note',id), newFields)
