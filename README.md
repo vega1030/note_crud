@@ -1,2 +1,2 @@
-# note_generator
+# Guest List
 Construction with POO
