@@ -1,2 +1,2 @@
 # Guest List
-Construction with POO
+CRUD with Firebase/Firestore
