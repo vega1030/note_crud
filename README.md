@@ -1,2 +1,2 @@
-# Guest List
+# List
 CRUD with Firebase/Firestore
