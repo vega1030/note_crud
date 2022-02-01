@@ -105,7 +105,7 @@ const productList = document.getElementById('contentNotes')
                         </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a class="dropdown-item" href="#">Product: <strong>${notesDb.product}</strong> </a></li>
-                                <li><a class="dropdown-item" href="#"> Price: <strong>${notesDb.amount}</strong> </a></li>
+                                <li><a class="dropdown-item" href="#"> Amount: <strong>${notesDb.amount}</strong> </a></li>
                                 <li><a class="dropdown-item" href="#"> Comment: <strong>${notesDb.comment}</strong> </a></li>
                             </ul>
                             <div class="content_basket">
@@ -114,6 +114,19 @@ const productList = document.getElementById('contentNotes')
                                     <img src="./icon/edit_icon.svg" alt='edit' name = 'edit' class='edit_data' data-id = '${idDbData}'></img>
                                 </div>
                             </div>
+                    </div>
+                    <div>
+                        <ul>
+                            <li>
+                            Product: <strong>${notesDb.product}</strong>
+                            </li>
+                            <li>
+                            Amount: <strong>${notesDb.amount}</strong>
+                            </li>
+                            <li>
+                            Comment: <strong>${notesDb.comment}</strong>
+                            </li>
+                        </ul>
                     </div>
                 ` 
 
