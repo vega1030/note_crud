@@ -135,9 +135,9 @@
         height: 100vh;
     }
 
-    .contentViewNotes{
+    .content{
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
         align-items: flex-start;
         width: 100%;
