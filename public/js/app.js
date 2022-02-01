@@ -111,11 +111,16 @@ const productList = document.getElementById('contentNotes')
                             <div class="content_basket">
                                 <div class='ul_basquet'>   
                                     <img src="./icon/basket.svg" alt="basquet" name= 'delete' class ='delete_basquet' data-id='${idDbData}'></img>
+                                </div>
+                                <div class='ul_edit'>
                                     <img src="./icon/edit_icon.svg" alt='edit' name = 'edit' class='edit_data' data-id = '${idDbData}'></img>
                                 </div>
                             </div>
                     </div>
-                    <div>
+
+
+
+                    <div class= 'content_list_desktop'>
                         <ul>
                             <li>
                             Product: <strong>${notesDb.product}</strong>
