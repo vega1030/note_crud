@@ -43,9 +43,6 @@
 /* Laptop */
 @media  (min-device-width: 1200px) and (max-device-width: 1600px){
 
-    body{
-    }
-
     .contentMain___card{
         background-color: var(--color-3);
         color: var(--color-font-desktop);
@@ -86,11 +83,3 @@
 
 
 }
-
-
-
-
-/* .input-group{
-    display: flex;
-    flex-direction: column;
-} */
