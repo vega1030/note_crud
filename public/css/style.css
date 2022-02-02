@@ -1,10 +1,17 @@
 :root{
     /* --main-color-smartphone: #231E23; */
-    --main-color-smartphone: #686468;
+    --main-color-smartphone: rgba(104,100,104,1.0);
+    --color-sec-smartphone: rgba(57,166,163,1.0);
+    --color-3-smartphone: rgba(222,238,234,1.0);
+    --color-4smart-smartphone: rgba(191,19,99,1.0);
 
-    --color-sec-smartphone: #39A6A3;
-    --color-3-smartphone: #DEEEEA;
-    --color-4smart-smartphone: #BF1363;
+    /* Colors in version desktop  */
+
+    --color-font-desktop: rgba(232,232,232,0.9);
+    --color-2: rgba(240,84,84,1.0);
+    --color-3: rgba(48,71,94,0.9);
+    --color-4: rgba(34,40,49,1.0);
+
 }
 
 /* Smartphone */
@@ -21,12 +28,10 @@
  
     .contentMain___card{
         align-items: center;
-        background-color: var(--color-sec-smartphone);
+        background-color: var(--color-3);
         padding: 1%;
     }   
 
-    .contentViewNotes___dropdown{
-    }
 
     header{
         background-color: var(--color-4smart-smartphone);
@@ -37,10 +42,13 @@
 
 /* Laptop */
 @media  (min-device-width: 1200px) and (max-device-width: 1600px){
+
+    body{
+    }
+
     .contentMain___card{
-        background-color: antiquewhite;
-        align-items: center;
-    
+        background-color: var(--color-3);
+        color: var(--color-font-desktop);
     }
 
     .contentMain{
@@ -48,13 +56,17 @@
         flex-direction: row;
         width: 100%;
         height: 100vh;
-
-
+        background-color: var(--color-2);
     }
 
     .contentViewNotes{
         justify-content: center;
-        background-color: aquamarine
+        background-color: var(--color-3);
+    }
+
+    .content_list_desktop{
+        background-color: var(--color-2);
+        color: var(--color-font-desktop);
     }
 
     .contentNotes___Child{

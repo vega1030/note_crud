@@ -132,6 +132,15 @@ const productList = document.getElementById('contentNotes')
                             Comment: <strong>${notesDb.comment}</strong>
                             </li>
                         </ul>
+                        <div class="content_basket">
+                        <div class='ul_basquet'>   
+                            <img src="./icon/basket.svg" alt="basquet" name= 'delete' class ='delete_basquet' data-id='${idDbData}'></img>
+                        </div>
+                        <div class='ul_edit'>
+                            <img src="./icon/edit_icon.svg" alt='edit' name = 'edit' class='edit_data' data-id = '${idDbData}'></img>
+                        </div>
+                    </div>
+
                     </div>
                 ` 
 
