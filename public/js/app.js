@@ -4,7 +4,9 @@ import {
     upDateNote
     } from './db_firebase.js'
 
+
 let editStatus = false
+
 let id = ''
 
 
@@ -94,6 +96,7 @@ const productList = document.getElementById('contentNotes')
         onGetNote((querySnapshot)=>{ 
             let viewDOM = ''           
             querySnapshot.forEach(doc=>{
+                console.log(doc)
                 const notesDb =  doc.data()
                 const idDbData = doc.id
                 viewDOM += 
@@ -210,5 +213,6 @@ document.getElementById('contentNotes').addEventListener('click',(e)=>{
     const ui = new Ui()
     ui.deleteProduct(e.target)
 })
+
 
 

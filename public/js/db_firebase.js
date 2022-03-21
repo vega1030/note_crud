@@ -10,9 +10,9 @@ import {
   deleteDoc,
   doc,
   getDoc,
-  updateDoc
+  updateDoc,
+  setDoc
 } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
-
 //onSnapshot listen to the db in real-time. The app doesn't need refresh for view the new data
  
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -33,27 +33,54 @@ import {
   const app = initializeApp(firebaseConfig);
 const db = getFirestore()
   
-export const saveNote = (productClass) =>{
-  (productClass.product != '', productClass.amount != '')?
-    addDoc(collection(db,'note'),{
-      product: productClass.product,amount: productClass.amount,comment: productClass.comment
-    }):
-    console.log("error")
-  }
 
-  export const getNote = () => getDocs(collection(db,'note'))
+let user = '';
+
+// //create id with uid (auth.js)
+// export const activeUser = (userAc)=>{
+//   setDoc(doc(db,`users/${userAc}`))
+//   // return uidDocRef
+// }
+
+
+export const activeUser =  (userAc) =>{
+    user = userAc
+    console.log(user)
+    const id = crypto.randomUUID()
+    setDoc(doc(db,`users/${user}/notes/${id}`),
+    {
+    note:{
+        id:id,
+        product: 'producto',
+        amount: "23",
+        comment: 'un comment' 
+      }
+    }
+    ) 
+  }
+  console.log('el user',user)
+// export const saveNote = (productClass) =>{
+//   (productClass.product != '', productClass.amount != '')?
+//     addDoc(collection(db,'users'),{
+//       product: productClass.product,amount: productClass.amount,comment: productClass.comment
+//     }):
+//     console.log("error")
+//   }
+
+
+  export const getNote = () => getDocs(collection(db,'users'))
 
 
   //function for view db in the real-time
 
   export const onGetNote = (calling) =>{
-    onSnapshot(collection (db, 'note'),calling)
+    console.log(user)
+    onSnapshot(doc (db, `${user}`),calling)
   }
 
-  export const deleteNote = id => deleteDoc(doc(db,'note',id))
+  export const deleteNote = id => deleteDoc(doc(db,`${user}`,id))
 
-  export const getOneNote = id => getDoc(doc(db,'note',id))
+  export const getOneNote = id => getDoc(doc(db,`${user}`,id))
 
-  export const upDateNote =  (id, newFields) =>updateDoc(doc(db,'note',id), newFields)
+  export const upDateNote =  (id, newFields) =>updateDoc(doc(db,`${user}`,id), newFields)
 
-  

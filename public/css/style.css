@@ -17,6 +17,10 @@
 /* Smartphone */
 @media  (min-width: 320px) and (max-device-width:480px) {
 
+    ul{
+        list-style: none;
+    }
+
     .contentMain{
         background-color: var(--main-color-smartphone);
         padding: 2%;
@@ -43,6 +47,7 @@
 /* Laptop */
 @media  (min-device-width: 1200px) and (max-device-width: 1600px){
 
+
     .contentMain___card{
         background-color: var(--color-3);
         color: var(--color-font-desktop);
@@ -64,12 +69,12 @@
     .content_list_desktop{
         background-color: var(--color-2);
         color: var(--color-font-desktop);
+        font-size: 1.1rem;
     }
 
     .contentNotes___Child{
         width:30%;
         height:35%;
-        background-color: lightgray;
         margin: 0 0 2% 0;
     }
 
@@ -82,4 +87,12 @@
     }
 
 
+}
+
+/* Tablets */
+
+@media  (min-device-width: 810px) and (max-device-width: 1024px){
+
+.contentMain {background-color: var(--color-2);}
+.contentViewNotes{background-color: var(--color-3);}
 }
