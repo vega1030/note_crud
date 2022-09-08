@@ -1,7 +1,10 @@
+'use strict'
+
+
 import {
     saveNote, getOneNote,onGetNote ,
     deleteNote,
-    upDateNote
+    upDateNote,
     } from './db_firebase.js'
 
 
@@ -98,7 +101,6 @@ const productList = document.getElementById('contentNotes')
             querySnapshot.forEach(doc=>{
                 console.log(doc)
                 const notesDb =  doc.data()
-                const idDbData = doc.id
                 viewDOM += 
                 
                 `
@@ -146,10 +148,10 @@ const productList = document.getElementById('contentNotes')
 
                     </div>
                 ` 
+                productList.innerHTML = viewDOM
 
 //***************** Logic for delete dates in Firestore */
 
-                productList.innerHTML = viewDOM
                 const basquetDelete = productList.querySelectorAll('.delete_basquet')             
                 basquetDelete.forEach(basquet=>{
                     basquet.addEventListener('click',({target:{dataset}})=>{
@@ -193,6 +195,7 @@ const productList = document.getElementById('contentNotes')
         //***************** Condition for update data or save data in firebase */
         if(!editStatus){
             saveNote(product)
+
         }
         else{
             upDateNote(id,{product: product.product,amount: product.amount,comment: product.comment})

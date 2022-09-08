@@ -1,7 +1,10 @@
+'use strict'
+
+
 import firebaseApp from '../js/firebase_credentials.js';
 import { getAuth, GoogleAuthProvider,signInWithRedirect,signInWithPopup,signOut,onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-auth.js";
-import{activeUser} from '../js/db_firebase.js'
-
+import { activeUser } from './db_firebase.js';
+export let activeUserLet = ''
 
 const auth = getAuth(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
@@ -41,12 +44,14 @@ testauth.addEventListener('click',(e)=>{
       </ul>
       `
       navBar.innerHTML = modelNavbar
-
+      navBar.style.backgroundColor='var(--color-4smart-smartphone)'
       onAuthStateChanged(auth,(user)=>{
         if(user){
-            const uid= user.uid 
-            console.log(uid)
-            activeUser(uid)
+          
+            activeUserLet = user.uid 
+            activeUser(user.uid)
+            console.log(activeUserLet)
+            // activeUser(activeUserLet)
         }
         else{
             console.log('nada')
@@ -67,15 +72,16 @@ testauth.addEventListener('click',(e)=>{
 
   })
 const formAuth = document.querySelector('#signup-form')
-const logOut = document.querySelector('#logOut');
+ const logOut = document.querySelector('#logOut');
 
+(logOut === null)? console.log('nulo'):
 logOut.addEventListener('click', ()=>{
     signOut(auth).then(()=>{
         welcomeMessage.style.display='flex'
     })
 })
 
-
+console.log(activeUserLet)
 
 formAuth.addEventListener('submit',(e)=>{
     e.preventDefault();
